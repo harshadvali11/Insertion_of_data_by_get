@@ -98,7 +98,7 @@ def display_webpages(request):
     webpages=Webpage.objects.filter(name__startswith='h' , url__endswith='in')
     webpages=Webpage.objects.all()
     #webpages=Topic.objects.annotate(topic_name=Subquery(Webpage.objects.filter(topic_name=OuterRef('pk')).values('name')))[:1]
-    webpages=Topic.objects.prefetch_related('webpage_set').all()
+    #webpages=Topic.objects.prefetch_related('webpage_set').all()
     
     
     
@@ -116,6 +116,8 @@ def display_access(request):
     access=AccessRecord.objects.filter(date__year='2024')
     access=AccessRecord.objects.filter(date__month='10')
     access=AccessRecord.objects.filter(date__day__gt='7')
+    access=AccessRecord.objects.all()
+    
     
     
     
@@ -164,6 +166,16 @@ def update_webpage(request):
     d={'webpages':webpages}
     return render(request,'display_webpages.html',d)
 
+
+def delete_webpage(request):
+    #Webpage.objects.filter(topic_name='Cricket').delete()
+    Webpage.objects.filter(name='Aniket Sharma').delete()
+    Webpage.objects.all().delete()
+    
+
+    webpages=Webpage.objects.all()
+    d={'webpages':webpages}
+    return render(request,'display_webpages.html',d)
 
 
 
